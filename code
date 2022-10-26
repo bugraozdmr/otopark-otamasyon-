@@ -1,0 +1,168 @@
+#include <iostream>
+#include <string>
+#include <conio.h>
+#include <cmath>
+#include <ctime>
+#include <string.h>
+#define MAX 100
+using namespace std;
+//OTOPARK OTOMASYON 
+class arac {
+public:
+	string plaka;
+	string kisi_ad, kisi_soyad, kisi_tel;
+	time_t giris;		//giris adresinde bir zaman degiskeni oluşturuldu.
+}araba[MAX];
+class otopark {
+public:
+	string gorevli_id, gorevli_sifre;
+	int i, gelir;
+	otopark(string id, string s) {
+		gorevli_id = id;
+		gorevli_sifre = s;
+		gelir = 0;	//toplam gelire sıfır atandı.
+		i = -1;		//indis için kullanılacak i değişkenine -1 atandı.
+	}
+	void menu() {
+		int secim;
+		cout << "OTOPARK PROGRAMI" << endl;
+		cout << "----------------" << endl;
+		cout << "1.Yeni arac" << endl;
+		cout << "2.Arac cikisi" << endl;
+		cout << "3.Arac listele" << endl;
+		cout << "4.Rapor" << endl;
+		cout << "5.Musteri bilgi" << endl;
+		cout << "6.Cikis" << endl;
+		secim = _getch();	//secim aliyor.
+		switch (secim)
+		{
+		case '1':yeni();
+			break;
+		case '2':cikar();
+			break;
+		case '3': listele();
+			break;
+		case '4':rapor();
+			break;
+		case '5':bilgi();		//cikis islemi
+			break;
+		case '6':exit(0);		//cikis islemi
+			break;
+		default:
+			cout << "hatali secim !" << endl;
+			break;
+		}
+	}
+	void yeni() {
+		system("cls");
+		i++;
+		cout << "Aracin sahibinin adi : ";
+		cin >> araba[i].kisi_ad;
+		cout << "Aracin sahibinin soyadi : ";
+		cin >> araba[i].kisi_soyad;
+		cout << "Aracin sahibinin telefonu : ";
+		cin >> araba[i].kisi_tel;
+		cout << "Aracin plakasi : ";
+		cin >> araba[i].plaka;
+		cout << "Islem basarili . " << endl;
+		time(&araba[i].giris);
+		system("pause");
+		system("cls");		//kullanici 1 tusa bastiginda konsol temizlenir..
+		menu();
+	}
+	void cikar() {
+		system("cls");
+		int j = 0, k , saat;
+		double sure=0;
+		time_t cikis;
+		string plka;
+		time(&cikis);
+		cout << "plaka girin : ";
+		cin >> plka;
+		for (int o= 0;o < 100;o++) {
+				if (plka == araba[o].plaka) {
+					sure = difftime(cikis, araba[o].giris);
+					for (k = o;k <= i;k++) {
+						araba[k] = araba[k + 1];		//araba[k] değeri boşaltılıyor..
+					}
+					cout << "cikarma islemi basarili." << endl;
+					i--;
+					sure = sure / 3600;
+					saat = ceil(sure);		//ceil tavanı alır.
+					cout << "Ucret = " << saat * 5 << " TL" << endl;
+					gelir += saat * 5;
+					system("pause");
+					system("cls");
+					menu();
+				}
+				else continue;		//hepsini kontrol ettikten sonra başka sorguya geçiyor !!
+				if (plka != araba[o].plaka) {
+					cout << "Plaka bulunamadi !" << endl;
+					system("pause");
+					system("cls");
+					menu();
+				}
+			}
+		}
+	void listele() {
+		system("cls");
+		for (int j = 0;j <= 1; j++) {
+			cout << araba[j].plaka << endl;
+		}
+		system("pause");
+		system("cls");
+		menu();
+	}
+	void rapor() {
+		system("cls");
+		cout << "Suanki gelir : " << gelir << endl;
+		system("pause");
+		system("cls");
+		menu();
+	}
+	void bilgi() {
+		system("cls");
+		for (int a = 0;a < 100;a++) {
+			if (araba[a].kisi_ad != "") {
+				cout << "Musteri adi : " << araba[a].kisi_ad << endl;
+				cout << "Musteri soyadi : " << araba[a].kisi_soyad << endl;
+				cout << "Musteri telefonu : " << araba[a].kisi_tel << endl;
+				cout << "Musteri plaka : " << araba[a].plaka << endl;
+				cout << "------------------------------- " << endl;
+			}
+			else break;
+		}
+		system("pause");
+		system("cls");
+		menu();
+	}
+}; 
+int main() {		
+	otopark calisan("admin", "b1b3");
+	string ad, sifre;
+	int i = 0;
+	cout << "OTOPARK PROGRAMI" << endl;
+	while (true)
+	{
+		cout << "Kullanici adi giriniz : ";
+		cin >> ad;
+		cout << "Sifre giriniz : ";
+		cin >> sifre;
+		if (calisan.gorevli_id == ad) {
+			if (calisan.gorevli_sifre == sifre) {
+				cout << "Sifre dogru yonlendiriliyorsunuz . " << endl;
+				break;
+			}
+		}
+		else {
+			cout << "Hatali giris . " << endl;
+		}
+		system("pause");
+		system("cls");
+	}
+	system("pause");
+	system("cls");
+	calisan.menu();
+
+}
+//simple example for beginning 

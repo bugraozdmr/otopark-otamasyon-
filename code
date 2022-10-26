@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <string>
 #include <conio.h>
@@ -72,42 +73,44 @@ public:
 	}
 	void cikar() {
 		system("cls");
-		int j = 0, k , saat;
-		double sure=0;
+		int j = 0, k, saat;
+		double sure = 0;
 		time_t cikis;
 		string plka;
 		time(&cikis);
 		cout << "plaka girin : ";
 		cin >> plka;
-		for (int o= 0;o < 100;o++) {
-				if (plka == araba[o].plaka) {
-					sure = difftime(cikis, araba[o].giris);
-					for (k = o;k <= i;k++) {
-						araba[k] = araba[k + 1];		//araba[k] değeri boşaltılıyor..
-					}
-					cout << "cikarma islemi basarili." << endl;
-					i--;
-					sure = sure / 3600;
-					saat = ceil(sure);		//ceil tavanı alır.
-					cout << "Ucret = " << saat * 5 << " TL" << endl;
-					gelir += saat * 5;
-					system("pause");
-					system("cls");
-					menu();
+		for (int o = 0;o < 100;o++) {
+			if (plka == araba[o].plaka) {
+				sure = difftime(cikis, araba[o].giris);
+				for (k = o;k <= i;k++) {
+					araba[k] = araba[k + 1];		//araba[k] değeri boşaltılıyor..
 				}
-				else continue;		//hepsini kontrol ettikten sonra başka sorguya geçiyor !!
-				if (plka != araba[o].plaka) {
-					cout << "Plaka bulunamadi !" << endl;
-					system("pause");
-					system("cls");
-					menu();
-				}
+				cout << "cikarma islemi basarili." << endl;
+				i--;
+				sure = sure / 3600;
+				saat = ceil(sure);		//ceil tavanı alır.
+				cout << "Ucret = " << saat * 5 << " TL" << endl;
+				gelir += saat * 5;
+				system("pause");
+				system("cls");
+				menu();
+			}
+			else continue;		//hepsini kontrol ettikten sonra başka sorguya geçiyor !!
+			if (plka != araba[o].plaka) {
+				cout << "Plaka bulunamadi !" << endl;
+				system("pause");
+				system("cls");
+				menu();
 			}
 		}
+	}
 	void listele() {
 		system("cls");
-		for (int j = 0;j <= 1; j++) {
-			cout << araba[j].plaka << endl;
+		for (int j = 0;j <= 10; j++) {
+			if (araba[j].plaka != "") {
+				cout << araba[j].plaka << endl;
+			}
 		}
 		system("pause");
 		system("cls");
@@ -130,14 +133,14 @@ public:
 				cout << "Musteri plaka : " << araba[a].plaka << endl;
 				cout << "------------------------------- " << endl;
 			}
-			else break;
+			else continue;
 		}
 		system("pause");
 		system("cls");
 		menu();
 	}
-}; 
-int main() {		
+};
+int main() {
 	otopark calisan("admin", "b1b3");
 	string ad, sifre;
 	int i = 0;
